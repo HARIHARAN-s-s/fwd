@@ -1,0 +1,194 @@
+Chat.js - The main chat component.
+MessageList.js - Component to display the list of messages.
+MessageInput.js - Component for the message input field.
+
+
+
+
+src/Chat.js
+jsx
+Copy code
+import React, { useState } from 'react';
+import MessageList from './MessageList';
+import MessageInput from './MessageInput';
+import './Chat.css';
+
+const Chat = () => {
+    const [messages, setMessages] = useState([]);
+
+    const handleSendMessage = (message) => {
+        setMessages([...messages, message]);
+    };
+
+    return (
+        <div className="chat-container">
+            <h1>Chat Module</h1>
+            <MessageList messages={messages} />
+            <MessageInput onSendMessage={handleSendMessage} />
+        </div>
+    );
+};
+
+export default Chat;
+src/MessageList.js
+jsx
+Copy code
+import React from 'react';
+import './MessageList.css';
+
+const MessageList = ({ messages }) => {
+    return (
+        <div className="message-list">
+            {messages.map((message, index) => (
+                <div key={index} className="message">
+                    {message}
+                </div>
+            ))}
+        </div>
+    );
+};
+
+export default MessageList;
+src/MessageInput.js
+jsx
+Copy code
+import React, { useState } from 'react';
+import './MessageInput.css';
+
+const MessageInput = ({ onSendMessage }) => {
+    const [message, setMessage] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (message.trim()) {
+            onSendMessage(message);
+            setMessage('');
+        }
+    };
+
+    return (
+        <form className="message-input" onSubmit={handleSubmit}>
+            <input
+                type="text"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Type a message"
+            />
+            <button type="submit">Send</button>
+        </form>
+    );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export default MessageInput;
+Step 3: Add CSS for Styling
+Create the following CSS files to style the chat components:
+
+src/Chat.css
+css
+Copy code
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #f9f9f9;
+}
+
+.chat-container h1 {
+    background-color: #4caf50;
+    color: white;
+    margin: 0;
+    padding: 10px;
+    text-align: center;
+}
+src/MessageList.css
+css
+Copy code
+.message-list {
+    flex: 1;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    overflow-y: auto;
+    height: 300px;
+}
+
+.message {
+    padding: 5px 10px;
+    margin: 5px 0;
+    background-color: #e1ffc7;
+    border-radius: 5px;
+    max-width: 80%;
+}
+src/MessageInput.css
+css
+Copy code
+.message-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.message-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.message-input button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #4caf50;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+Step 4: Update the App Component
+Finally, update the App.js file to include the Chat component:
+
+src/App.js
+jsx
+Copy code
+import React from 'react';
+import Chat from './Chat';
+import './App.css';
+
+function App() {
+    return (
+        <div className="App">
+            <Chat />
+        </div>
+    );
+}
+
+export default App;
